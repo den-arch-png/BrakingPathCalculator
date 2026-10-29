@@ -1,0 +1,18 @@
+{
+    "mass": null,
+    "max_landing_weight": null,
+    "max_takeoff_weight": null,
+    "initial_speed": null,
+    "wing_area": null,
+    "drag_coefficient": null,
+    "lift_coefficient": null,
+    "engines": [
+        { 
+            "type": "CFM56-5B",
+            "takeoff_thrust": 133450, 
+            "takeoff_thrust_units": "N"
+        }
+    ],
+    "info_source": ["https://www.easa.europa.eu/sites/default/files/dfu/TCDS%20EASA%20E.003%20issue%2006.pdf?", 
+    "https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/2023-12/ac_a320_1223.pdf?"]
+}

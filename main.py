@@ -2,6 +2,8 @@ import matplotlib
 matplotlib.use("QtAgg")
 import matplotlib.pyplot as plt
 
+"""This is a ChatGPT generated prototype, 
+it's to be updated later with implementation of first CLI/App version."""
 
 def simulate_landing_roll(
     mass=60_000,          # kg

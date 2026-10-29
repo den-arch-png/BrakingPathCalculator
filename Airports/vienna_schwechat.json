@@ -5,14 +5,24 @@
             "length": null,
             "width": null,
             "surface_type": "asphalt",
-            "surface_condition": null
+            "surface_condition": null,
+            "vertical_profile": {
+                "start_elevation": null,
+                "end_elevation": null,
+                "slope": null
+            }
         },
         {
             "name": "16/34",
             "length": null,
             "width": null,
             "surface_type": "asphalt",
-            "surface_condition": null
+            "surface_condition": null,
+            "vertical_profile": {
+                "start_elevation": null,
+                "end_elevation": null,
+                "slope": null
+            }
         }
     ]
 }

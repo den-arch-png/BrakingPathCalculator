@@ -1,0 +1,18 @@
+{
+    "runways": [
+        {
+            "name": "11/29",
+            "length": null,
+            "width": null,
+            "surface_type": "asphalt",
+            "surface_condition": null
+        },
+        {
+            "name": "16/34",
+            "length": null,
+            "width": null,
+            "surface_type": "asphalt",
+            "surface_condition": null
+        }
+    ]
+}

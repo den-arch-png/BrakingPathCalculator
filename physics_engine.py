@@ -45,6 +45,7 @@ def lift_force(aircraft_data, environment_data) -> float:
 def normal_force(aircraft_data, environment_data) -> float:
 
     """Calculates the normal force"""
+
     azimuth_angle = airport_data["runways"]["azimuth_angle"]
     azimuth_angle_rad = math.radians(azimuth_angle)
     mass = aircraft_data["mass"]
@@ -87,7 +88,28 @@ def rolling_resistance() -> float:
 
 
 """Aerodynamic forces"""
+def drag_coefficient_calculation(aircraft_data) -> float:
 
-def aerodynamic_drag() -> float:
+    """Calculates the drag coefficient based on aircraft configuration"""
+
+    zero_lift_drag_coefficient = aircraft_data["wing"]["zero_lift_drag_coefficient"]
+    landing_gear_drag_coefficient = aircraft_data["landing_gear"]["drag_coefficient"]
+    flap_drag_coefficient = aircraft_data["flaps"]["drag_coefficient"]
+    lift_coefficient = aircraft_data["wing"]["lift_coefficient"]
+    wing_aspect_ratio = aircraft_data["wing"]["aspect_ratio"]
+    wing_efficiency_factor = aircraft_data["wing"]["efficiency_factor"]
+
+    return zero_lift_drag_coefficient + landing_gear_drag_coefficient + flap_drag_coefficient + lift_coefficient**2 / (math.pi * wing_aspect_ratio * wing_efficiency_factor)
+
+def aerodynamic_drag(aircraft_data, environment_data) -> float:
+
     """Calculates the aerodynamic drag force"""
-    pass
+
+    air_density = environment_data["air_density"]
+    airspeed = airspeed_calculation()
+    wing_area = aircraft_data["wing"]["area"]
+    drag_coefficient = drag_coefficient_calculation()
+
+    drag = (0.5 * air_density * airspeed**2 * wing_area * drag_coefficient)
+
+    return drag

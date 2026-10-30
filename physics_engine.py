@@ -26,17 +26,16 @@ def airspeed_calculation(aircraft_data, environment_data) -> float:
     wind_direction_rad = math.radians(wind_direction)
     wind_speed_along_runway = wind_speed * math.cos(wind_direction_rad)
 
-    return aircraft_ground_speed - wind_speed_along_runway
+    return max(0.0, aircraft_ground_speed - wind_speed_along_runway)
 
 
 """Vertical forces"""
 
-def lift_force(aircraft_data, environment_data) -> float:
+def lift_force(airspeed, aircraft_data, environment_data) -> float:
 
     """Calculates the lift force"""
 
     air_density = environment_data["air_density"]
-    airspeed = airspeed_calculation()
     wing_area = aircraft_data["wing"]["area"]
     lift_coefficient = aircraft_data["wing"]["lift_coefficient"]
 
@@ -46,18 +45,18 @@ def normal_force(aircraft_data, environment_data) -> float:
 
     """Calculates the normal force"""
 
-    azimuth_angle = airport_data["runways"]["azimuth_angle"]
-    azimuth_angle_rad = math.radians(azimuth_angle)
+    slope_angle = airport_data["runways"]["vertical_profile"]["slope_angle"]
+    slope_angle_rad = math.radians(slope_angle)
     mass = aircraft_data["mass"]
     gravity = environment_data["gravity"]
-    lift = lift_force()
+    lift = lift_force(aircraft_data, environment_data)
 
-    return mass * gravity * math.cos(azimuth_angle_rad) - lift
+    return max(0.0, mass * gravity * math.cos(slope_angle_rad) - lift)
 
 
 """Longitudinal forces"""
 
-def braking_force_wheels() -> float:
+def braking_force_wheels(aircraft_data) -> float:
     """Calculates the braking force from the wheels"""
     pass
 
@@ -73,14 +72,13 @@ def reverse_thrust(aircraft_data) -> float:
 
     return thrust_per_engine * number_of_engines * reverse_thrust_factor
 
-def rolling_resistance() -> float:
+def rolling_resistance(normal_force, aircraft_data) -> float:
 
     """Calculates the rolling resistance force"""
 
     C_rr = aircraft_data["landing_gear"]["rolling_resistance_coefficient"]
-    normal_force_value = normal_force()
 
-    return C_rr * normal_force_value
+    return C_rr * normal_force
 
 
 """Lateral forces"""
@@ -89,27 +87,32 @@ def rolling_resistance() -> float:
 
 """Aerodynamic forces"""
 def drag_coefficient_calculation(aircraft_data) -> float:
+    """Calculates the simplified drag coefficient."""
 
-    """Calculates the drag coefficient based on aircraft configuration"""
+    wing = aircraft_data["wing"]
 
-    zero_lift_drag_coefficient = aircraft_data["wing"]["zero_lift_drag_coefficient"]
-    landing_gear_drag_coefficient = aircraft_data["landing_gear"]["drag_coefficient"]
-    flap_drag_coefficient = aircraft_data["flaps"]["drag_coefficient"]
-    lift_coefficient = aircraft_data["wing"]["lift_coefficient"]
-    wing_aspect_ratio = aircraft_data["wing"]["aspect_ratio"]
-    wing_efficiency_factor = aircraft_data["wing"]["efficiency_factor"]
+    cd0 = wing["zero_lift_drag_coefficient"]
+    cd_gear = aircraft_data["landing_gear"]["drag_coefficient"]
+    cd_flaps = aircraft_data["flaps"]["drag_coefficient"]
 
-    return zero_lift_drag_coefficient + landing_gear_drag_coefficient + flap_drag_coefficient + lift_coefficient**2 / (math.pi * wing_aspect_ratio * wing_efficiency_factor)
+    cl = wing["lift_coefficient"]
+    aspect_ratio = wing["aspect_ratio"]
+    efficiency = wing["efficiency_factor"]
 
-def aerodynamic_drag(aircraft_data, environment_data) -> float:
+    induced_drag = cl**2 / (math.pi * aspect_ratio * efficiency)
 
-    """Calculates the aerodynamic drag force"""
+    return cd0 + cd_gear + cd_flaps + induced_drag
 
-    air_density = environment_data["air_density"]
-    airspeed = airspeed_calculation()
-    wing_area = aircraft_data["wing"]["area"]
-    drag_coefficient = drag_coefficient_calculation()
+def aerodynamic_drag(airspeed, aircraft_data, environment_data) -> float:
+    """Calculates aerodynamic drag."""
 
-    drag = (0.5 * air_density * airspeed**2 * wing_area * drag_coefficient)
+    rho = environment_data["air_density"]
+    area = aircraft_data["wing"]["area"]
+    cd = drag_coefficient_calculation(aircraft_data)
 
-    return drag
+    return 0.5 * rho * airspeed**2 * area * cd
+
+
+
+"""Here begins the main function to calculate the braking distance"""
+

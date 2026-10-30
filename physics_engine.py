@@ -45,12 +45,13 @@ def lift_force(aircraft_data, environment_data) -> float:
 def normal_force(aircraft_data, environment_data) -> float:
 
     """Calculates the normal force"""
-
+    azimuth_angle = airport_data["runways"]["azimuth_angle"]
+    azimuth_angle_rad = math.radians(azimuth_angle)
     mass = aircraft_data["mass"]
     gravity = environment_data["gravity"]
     lift = lift_force()
 
-    return mass * gravity - lift
+    return mass * gravity * math.cos(azimuth_angle_rad) - lift
 
 
 """Longitudinal forces"""
@@ -79,10 +80,6 @@ def rolling_resistance() -> float:
     normal_force_value = normal_force()
 
     return C_rr * normal_force_value
-
-def weight_along_slope() -> float:
-    """Calculates the weight component along the slope"""
-    pass
 
 
 """Lateral forces"""

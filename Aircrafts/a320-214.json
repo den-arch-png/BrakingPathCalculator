@@ -9,8 +9,10 @@
     "engines": [
         { 
             "type": "CFM56-5B",
+            "number": 2,
             "takeoff_thrust": 133450, 
-            "takeoff_thrust_units": "N"
+            "takeoff_thrust_units": "N",
+            "reverse_thrust_factor": null
         }
     ],
     "info_source": ["https://www.easa.europa.eu/sites/default/files/dfu/TCDS%20EASA%20E.003%20issue%2006.pdf?", 

@@ -93,7 +93,7 @@ def drag_coefficient_calculation(aircraft_data) -> float:
 
     cd0 = wing["zero_lift_drag_coefficient"]
     cd_gear = aircraft_data["landing_gear"]["drag_coefficient"]
-    cd_flaps = aircraft_data["flaps"]["drag_coefficient"]
+    cd_flaps = aircraft_data["wing"]["flaps"]["drag_coefficient"]
 
     cl = wing["lift_coefficient"]
     aspect_ratio = wing["aspect_ratio"]

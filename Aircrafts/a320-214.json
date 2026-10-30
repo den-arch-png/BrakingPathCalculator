@@ -5,7 +5,17 @@
     "ground_speed": null,
     "wing": {
         "area": null,
-        "lift_coefficient": null
+        "lift_coefficient": null,
+        "span": null,
+        "aspect_ratio": null,
+        "zero_lift_drag_coefficient": null,
+        "efficiency_factor": null,
+        "flaps": {
+            "deflection_angle": null,
+            "lift_coefficient": null,
+            "drag_coefficient": null
+        }
+
     },
     "landing_gear": {
         "brake_type": null,

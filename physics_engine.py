@@ -52,6 +52,7 @@ def normal_force(aircraft_data, environment_data) -> float:
 
     return mass * gravity - lift
 
+
 """Longitudinal forces"""
 
 def braking_force_wheels() -> float:
@@ -71,8 +72,13 @@ def reverse_thrust(aircraft_data) -> float:
     return thrust_per_engine * number_of_engines * reverse_thrust_factor
 
 def rolling_resistance() -> float:
+
     """Calculates the rolling resistance force"""
-    pass
+
+    C_rr = aircraft_data["landing_gear"]["rolling_resistance_coefficient"]
+    normal_force_value = normal_force()
+
+    return C_rr * normal_force_value
 
 def weight_along_slope() -> float:
     """Calculates the weight component along the slope"""

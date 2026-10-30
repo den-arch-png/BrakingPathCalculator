@@ -2,10 +2,18 @@
     "mass": null,
     "max_landing_weight": null,
     "max_takeoff_weight": null,
-    "initial_speed": null,
-    "wing_area": null,
+    "ground_speed": null,
+    "wing": {
+        "area": null,
+        "lift_coefficient": null
+    },
+    "landing_gear": {
+        "brake_type": null,
+        "brake_efficiency": null,
+        "brake_temperature": null,
+        "rolling_resistance_coefficient": null
+    },
     "drag_coefficient": null,
-    "lift_coefficient": null,
     "engines": [
         { 
             "type": "CFM56-5B",

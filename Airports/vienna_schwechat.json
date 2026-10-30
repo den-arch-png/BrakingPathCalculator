@@ -6,6 +6,7 @@
             "width": null,
             "surface_type": "asphalt",
             "surface_condition": null,
+            "azimuth_angle": null,
             "vertical_profile": {
                 "start_elevation": null,
                 "end_elevation": null,
@@ -18,6 +19,7 @@
             "width": null,
             "surface_type": "asphalt",
             "surface_condition": null,
+            "azimuth_angle": null,
             "vertical_profile": {
                 "start_elevation": null,
                 "end_elevation": null,

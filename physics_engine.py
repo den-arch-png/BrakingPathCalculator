@@ -31,15 +31,6 @@ def airspeed_calculation(aircraft_data, environment_data) -> float:
 
 """Vertical forces"""
 
-def normal_force(aircraft_data, environment_data) -> float:
-
-    """Calculates the normal force"""
-
-    mass = aircraft_data["mass"]
-    gravity = environment_data["gravity"]
-
-    return mass * gravity
-
 def lift_force(aircraft_data, environment_data) -> float:
 
     """Calculates the lift force"""
@@ -51,6 +42,15 @@ def lift_force(aircraft_data, environment_data) -> float:
 
     return 0.5 * air_density * airspeed**2 * wing_area * lift_coefficient
 
+def normal_force(aircraft_data, environment_data) -> float:
+
+    """Calculates the normal force"""
+
+    mass = aircraft_data["mass"]
+    gravity = environment_data["gravity"]
+    lift = lift_force()
+
+    return mass * gravity - lift
 
 """Longitudinal forces"""
 

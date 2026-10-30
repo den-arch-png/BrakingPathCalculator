@@ -1,4 +1,5 @@
 import json
+import math
 
 """This module takes raw data
  and calculates physical forces 
@@ -9,22 +10,46 @@ def load_json(filename):
     with open(filename, "r", encoding="utf-8") as file:
         return json.load(file)
 
-
 aircraft_data = load_json("a320-214.json")
 environment_data = load_json("environment.json")
 airport_data = load_json("vienna-schwechat.json")
 
 
+
+def airspeed_calculation(aircraft_data, environment_data) -> float:
+
+    """Calculates the airspeed based on ground speed and wind conditions"""
+
+    aircraft_ground_speed = aircraft_data["ground_speed"]
+    wind_speed = environment_data["wind_speed"]
+    wind_direction = environment_data["wind_direction"]
+    wind_direction_rad = math.radians(wind_direction)
+    wind_speed_along_runway = wind_speed * math.cos(wind_direction_rad)
+
+    return aircraft_ground_speed - wind_speed_along_runway
+
+
 """Vertical forces"""
 
-def normal_force() -> float:
+def normal_force(aircraft_data, environment_data) -> float:
+
     """Calculates the normal force"""
-    pass
 
-def lift_force() -> float:
+    mass = aircraft_data["mass"]
+    gravity = environment_data["gravity"]
+
+    return mass * gravity
+
+def lift_force(aircraft_data, environment_data) -> float:
+
     """Calculates the lift force"""
-    pass
 
+    air_density = environment_data["air_density"]
+    airspeed = airspeed_calculation()
+    wing_area = aircraft_data["wing"]["area"]
+    lift_coefficient = aircraft_data["wing"]["lift_coefficient"]
+
+    return 0.5 * air_density * airspeed**2 * wing_area * lift_coefficient
 
 
 """Longitudinal forces"""
@@ -33,9 +58,11 @@ def braking_force_wheels() -> float:
     """Calculates the braking force from the wheels"""
     pass
 
-def reverse_thrust(data) -> float:
+def reverse_thrust(aircraft_data) -> float:
+
     """Calculates the reverse thrust force"""
-    engine = data["engines"]
+
+    engine = aircraft_data["engines"]
 
     thrust_per_engine = engine["take_off_thrust"]
     number_of_engines = engine["number"]

@@ -1,15 +1,20 @@
 {
-    "mass": null,
-    "max_landing_weight": null,
-    "max_takeoff_weight": null,
+    "mass": 61500,
+    "max_landing_weight": 64500,
+    "max_takeoff_weight": 73500,
+    "weight_units": "kg",
     "ground_speed": null,
     "wing": {
-        "area": null,
+        "area": 122.4,
+        "area_units": "m^2",
         "lift_coefficient": null,
-        "span": null,
-        "aspect_ratio": null,
-        "zero_lift_drag_coefficient": null,
-        "efficiency_factor": null,
+        "span": 34.1,
+        "aspect_ratio": 9.396,
+        "zero_lift_drag_coefficient": {
+            "clean_configuration": 0.02,
+            "Flaps_deployed, gear_extended": 0.096
+        },
+        "efficiency_factor": 0.75,
         "flaps": {
             "deflection_angle": null,
             "lift_coefficient": null,
@@ -18,7 +23,7 @@
 
     },
     "landing_gear": {
-        "brake_type": null,
+        "brake_type": "carbon disk",
         "brake_efficiency": null,
         "brake_temperature": null,
         "rolling_resistance_coefficient": null
